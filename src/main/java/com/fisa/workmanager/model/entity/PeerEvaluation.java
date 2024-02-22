@@ -14,6 +14,10 @@ public class PeerEvaluation {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "p_id", referencedColumnName = "p_id")
+    private Project project;
+    
+    @ManyToOne
     @JoinColumn(name = "evaluatee_id", referencedColumnName = "e_id")
     private Employee evaluatee;
 
