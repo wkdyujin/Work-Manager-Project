@@ -18,8 +18,12 @@ import com.fisa.workmanager.service.AuthService;
 @RequestMapping("/auth")
 public class AuthController {
 	
-	@Autowired
 	private AuthService authService;
+	
+	@Autowired
+	public AuthController(AuthService authService) {
+		this.authService = authService;
+	}
 	
 	@GetMapping("/login")
 	public String loginForm() {
@@ -28,7 +32,13 @@ public class AuthController {
 	
 	@PostMapping("/login")
 	public String login(@ModelAttribute("loginForm") LoginDto loginDto, Model model) {
-		Optional<Employee> employee = authService.authenticate(loginDto.getEname(), loginDto.getPassword());
-		return null;
+		try {
+			Long id = authService.authenticate(loginDto.getEname(), loginDto.getPassword());
+			System.out.println(id);
+			return "index";
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			return "user/login";
+		}
 	}
 }

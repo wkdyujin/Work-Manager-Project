@@ -12,11 +12,16 @@ public class AuthService {
 	
 	private AuthRepository authRepo;
 	
-	public AuthService(AuthRepository erepo) {
+	public AuthService(AuthRepository authRepo) {
 		this.authRepo = authRepo;
 	}
 	
-	public Optional<Employee> authenticate(String ename, String password) {
-		return authRepo.findByEnameAndPassword(ename, password);
+	public Long authenticate(String ename, String password) {
+		Optional<Employee> result = authRepo.findByEnameAndPassword(ename, password);
+		if (result.isPresent()) {
+			Employee selected = result.get();
+			return selected.getId();
+		}
+		throw new RuntimeException("로그인 실패");
 	}
 }
