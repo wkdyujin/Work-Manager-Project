@@ -26,6 +26,9 @@ public class Employee {
 	@Enumerated(EnumType.STRING)
 	private GenderType gender;
 	
+	@Enumerated(EnumType.STRING)
+	private RoleType role;
+	
 	private Date birth;
 	private String tell;
 	private String location;
@@ -33,6 +36,10 @@ public class Employee {
 	private Date hiredate;
 	
 	public enum GenderType {
-        PM, CUSTOMER
+		FEMALE, MALE
+    }
+	
+	public enum RoleType {
+        USER, MANAGER, ADMIN
     }
 }
