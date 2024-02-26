@@ -14,6 +14,9 @@ import com.fisa.workmanager.dto.LoginDto;
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.service.AuthService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
@@ -31,11 +34,12 @@ public class AuthController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@ModelAttribute("loginForm") LoginDto loginDto, Model model) {
+	public String login(@ModelAttribute("loginForm") LoginDto loginDto, HttpServletRequest request, Model model) {
 		try {
 			Long id = authService.authenticate(loginDto.getEname(), loginDto.getPassword());
-			System.out.println(id);
-			return "index";
+	        HttpSession session = request.getSession();
+	        session.setAttribute("user", id);
+			return "redirect:/";
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			return "user/login";
