@@ -21,7 +21,7 @@ public class CheckLoginAspect {
     @Before("@annotation(com.fisa.workmanager.annotation.CheckLogin)")
     public void before(JoinPoint joinPoint) {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("user") == null) {
+        if (session == null || session.getAttribute("session") == null) {
             throw new NotLoggedInException(); 
         }
     }

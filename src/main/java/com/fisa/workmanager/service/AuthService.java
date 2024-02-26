@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.fisa.workmanager.dto.AuthDto;
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.repository.AuthRepository;
 
@@ -16,12 +17,13 @@ public class AuthService {
 		this.authRepo = authRepo;
 	}
 	
-	public Long authenticate(String ename, String password) {
+	public AuthDto authenticate(String ename, String password) {
 		Optional<Employee> result = authRepo.findByEnameAndPassword(ename, password);
 		if (result.isPresent()) {
-			Employee selected = result.get();
-			return selected.getId();
+			Employee employee = result.get();
+			return new AuthDto(employee.getId(), employee.getRole().name());
+		} else {
+			throw new RuntimeException("아이디 혹은 비밀번호를 확인해 주세요");
 		}
-		throw new RuntimeException("로그인 실패");
 	}
 }

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.fisa.workmanager.dto.AuthDto;
 import com.fisa.workmanager.dto.LoginDto;
-import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.service.AuthService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,9 +36,11 @@ public class AuthController {
 	@PostMapping("/login")
 	public String login(@ModelAttribute("loginForm") LoginDto loginDto, HttpServletRequest request, Model model) {
 		try {
-			Long id = authService.authenticate(loginDto.getEname(), loginDto.getPassword());
+			AuthDto authDto = authService.authenticate(loginDto.getEname(), loginDto.getPassword());
 	        HttpSession session = request.getSession();
-	        session.setAttribute("user", id);
+	        session.setAttribute("session", authDto);
+	        System.out.println(authDto.getRole());
+	        System.out.println(authDto.getId());
 			return "redirect:/";
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
