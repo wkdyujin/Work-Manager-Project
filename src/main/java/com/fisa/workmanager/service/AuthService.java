@@ -5,8 +5,11 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.fisa.workmanager.dto.AuthDto;
+import com.fisa.workmanager.dto.EmployeeDto;
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.repository.AuthRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class AuthService {
@@ -25,5 +28,18 @@ public class AuthService {
 		} else {
 			throw new RuntimeException("아이디 혹은 비밀번호를 확인해 주세요");
 		}
+	}
+
+	@Transactional
+	public void createUser(EmployeeDto empDto, String prefix) {
+		String empId = generateEmpId(prefix);
+		Employee employee = empDto.toEntity(empId);
+		System.out.println(employee.getEname() + " " + employee.getGender() + " " + employee.getHiredate());
+		authRepo.save(employee);
+	}
+	
+	private String generateEmpId(String prefix) {
+		Long maxId = authRepo.findMaxId();
+		return prefix + String.format("%04d", maxId + 1);
 	}
 }

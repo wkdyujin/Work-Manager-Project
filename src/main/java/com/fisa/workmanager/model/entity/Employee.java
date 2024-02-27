@@ -9,17 +9,24 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
 public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "e_id")
 	private Long id;
+	private String name;
 	private String ename;
 	private String password;
 	
@@ -28,9 +35,10 @@ public class Employee {
 	
 	@Enumerated(EnumType.STRING)
 	private RoleType role;
-	
+
+	private String email;
 	private Date birth;
-	private String tell;
+	private String tel;
 	private String location;
 	private Double salary;
 	private Date hiredate;
