@@ -46,7 +46,7 @@
 	                  PROJECT
 	                </a>
 	                <div class="dropdown-menu" aria-labelledby="navbarDropdownProjects">
-	                  <a class="dropdown-item" href="/projects">전체 프로젝트 조회</a>
+	                  <a class="dropdown-item" href="/project/list">전체 프로젝트 조회</a>
 	            		<c:if test="${session.role == 'MANAGER'|| session.role == 'USER'}">
 		                  <a class="dropdown-item" href="/myProjects">참여 중인 프로젝트</a>
 		            	</c:if>

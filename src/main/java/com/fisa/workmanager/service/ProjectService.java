@@ -57,4 +57,8 @@ public class ProjectService {
 		List<ProjectEmployeeDto> peDtoList = projectEmployeeRepo.findByProjectId(id);
 		return peDtoList;
 	}
+
+	public List<Project> getAllProject() {
+		return projectRepo.findAll();
+	}
 }

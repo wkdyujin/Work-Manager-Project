@@ -44,4 +44,10 @@ public class ProjectController {
 		model.addAttribute("project", peDtoList);
 		return "project/detail";
 	}
+	
+	@GetMapping("/list")
+	public String getProjectList(Model model) {
+		model.addAttribute("projectList", projectService.getAllProject());
+		return "project/list";
+	}
 }
