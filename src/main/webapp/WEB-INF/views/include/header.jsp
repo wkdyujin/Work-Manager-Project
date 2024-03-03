@@ -21,7 +21,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	    <a class="navbar-brand" href="#">WorkManager</a>
+	    <a class="navbar-brand" href="/">WorkManager</a>
 	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="navbar-toggler-icon"></span>
 	    </button>
@@ -46,12 +46,12 @@
 	                  PROJECT
 	                </a>
 	                <div class="dropdown-menu" aria-labelledby="navbarDropdownProjects">
-	                  <a class="dropdown-item" href="/projects">전체 프로젝트 조회</a>
+	                  <a class="dropdown-item" href="/project/list">전체 프로젝트 조회</a>
 	            		<c:if test="${session.role == 'MANAGER'|| session.role == 'USER'}">
 		                  <a class="dropdown-item" href="/myProjects">참여 중인 프로젝트</a>
 		            	</c:if>
 	            		<c:if test="${session.role == 'MANAGER'}">
-		                  <a class="dropdown-item" href="/createProject">프로젝트 생성</a>
+		                  <a class="dropdown-item" href="/project/register">프로젝트 생성</a>
 		            	</c:if>
 	                </div>
 	            </li>

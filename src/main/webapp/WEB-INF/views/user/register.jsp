@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>직원 추가</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<meta charset="UTF-8">
+	<title>직원 추가</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <%@include file="/WEB-INF/views/include/header.jsp" %>
@@ -39,11 +39,11 @@
 			        <label for="employee">사원</label>
 			    </div>
 			    <div>
-			        <input type="radio" id="team_leader" name="role" value="TEAM_LEADER">
+			        <input type="radio" id="team_leader" name="role" value="MANAGER">
 			        <label for="team_leader">팀장</label>
 			    </div>
 			    <div>
-			        <input type="radio" id="manager" name="role" value="MANAGER">
+			        <input type="radio" id="manager" name="role" value="ADMIN">
 			        <label for="manager">관리자</label>
 			    </div>
 			</div>
@@ -75,9 +75,5 @@
             <button type="submit" class="btn btn-primary">등록</button>
         </form>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
