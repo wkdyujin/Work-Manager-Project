@@ -51,7 +51,7 @@
 		                  <a class="dropdown-item" href="/myProjects">참여 중인 프로젝트</a>
 		            	</c:if>
 	            		<c:if test="${session.role == 'MANAGER'}">
-		                  <a class="dropdown-item" href="/createProject">프로젝트 생성</a>
+		                  <a class="dropdown-item" href="/project/register">프로젝트 생성</a>
 		            	</c:if>
 	                </div>
 	            </li>

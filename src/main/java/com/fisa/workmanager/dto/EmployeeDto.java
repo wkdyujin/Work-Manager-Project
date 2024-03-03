@@ -23,8 +23,8 @@ public class EmployeeDto {
 	private String ename;
 	private String password;
     private String name;
-    private String gender;
-    private String role;
+    private GenderType gender;
+    private RoleType role;
     private String email;
     private String tel;
     private String location;
@@ -36,28 +36,13 @@ public class EmployeeDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date hiredate;
 
-    public Employee toEntity(String empId) {
-        GenderType genderType;
-        try {
-            genderType = GenderType.valueOf(this.gender.toUpperCase());
-        } catch (Exception e) {
-            genderType = GenderType.MALE;
-        }
-
-        RoleType roleType;
-        try {
-            roleType = RoleType.valueOf(this.role.toUpperCase());
-        } catch (Exception e) {
-            roleType = RoleType.USER;
-        }
+    public Employee toEntity() {
 
         return Employee.builder()
         		.id(this.id)
                 .name(this.name)
-                .ename(empId)
-                .password(empId)
-                .gender(genderType)
-                .role(roleType)
+                .gender(this.gender)
+                .role(this.role)
                 .email(this.email)
                 .birth(this.birth)
                 .tel(this.tel)
