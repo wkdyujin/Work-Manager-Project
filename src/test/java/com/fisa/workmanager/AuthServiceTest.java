@@ -28,10 +28,10 @@ public class AuthServiceTest {
 		// given
 		EmployeeDto emp = new EmployeeDto();
 		emp.setName("user1");
-		emp.setRole("USER");
-		emp.setGender("MALE");
-		emp.setBirth(LocalDate.of(1990, 1, 1));
-		emp.setHiredate(LocalDate.of(2023, 1, 1));
+//		emp.setRole("USER");
+//		emp.setGender("MALE");
+//		emp.setBirth(LocalDate.of(1990, 1, 1));
+//		emp.setHiredate(LocalDate.of(2023, 1, 1));
 		
 		// when
 		authService.createUser(emp, "2408");
