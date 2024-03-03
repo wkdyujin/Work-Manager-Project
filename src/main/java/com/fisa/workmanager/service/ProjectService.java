@@ -1,11 +1,13 @@
 package com.fisa.workmanager.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.fisa.workmanager.dto.ProjectDto;
+import com.fisa.workmanager.dto.ProjectEmployeeDto;
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.model.entity.Project;
 import com.fisa.workmanager.model.entity.ProjectEmployee;
@@ -49,5 +51,10 @@ public class ProjectService {
 		projectEmployeeRepo.save(projectEmployee);
 		
 		return project.getId();
+	}
+
+	public List<ProjectEmployeeDto> getProjectEmployee(Long id) {
+		List<ProjectEmployeeDto> peDtoList = projectEmployeeRepo.findByProjectId(id);
+		return peDtoList;
 	}
 }

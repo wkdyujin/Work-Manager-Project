@@ -1,20 +1,20 @@
 package com.fisa.workmanager.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fisa.workmanager.dto.AuthDto;
-import com.fisa.workmanager.dto.LoginDto;
 import com.fisa.workmanager.dto.ProjectDto;
-import com.fisa.workmanager.model.entity.Project;
+import com.fisa.workmanager.dto.ProjectEmployeeDto;
 import com.fisa.workmanager.service.ProjectService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -39,7 +39,9 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/detail/{id}")
-	public String getProject(@PathVariable("id") Long id) {
+	public String getProject(@PathVariable("id") Long id, Model model) {
+		List<ProjectEmployeeDto> peDtoList = projectService.getProjectEmployee(id);
+		model.addAttribute("project", peDtoList);
 		return "project/detail";
 	}
 }
