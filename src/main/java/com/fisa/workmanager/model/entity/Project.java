@@ -3,6 +3,8 @@ package com.fisa.workmanager.model.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.fisa.workmanager.dto.ProjectDto;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +12,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
+@Builder
 @Entity
 public class Project {
 	@Id
@@ -30,4 +35,16 @@ public class Project {
 	
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
 	List<PmCustomerEvaluation> pmCusEval;
+	
+	public ProjectDto toDto() {
+		return ProjectDto.builder()
+				.id(this.id)
+				.pname(this.pname)
+				.description(this.description)
+				.client(this.client)
+				.startDate(this.startDate)
+				.deadline(this.deadline)
+				.budget(this.budget)
+				.build();
+	}
 }
