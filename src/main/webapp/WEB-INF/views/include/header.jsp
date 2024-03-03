@@ -34,7 +34,7 @@
 		                    EMPLOYEE
 		                </a>
 		                <div class="dropdown-menu" aria-labelledby="navbarDropdownHR">
-		                  <a class="dropdown-item" href="/employees">전체 직원 조회</a>
+		                  <a class="dropdown-item" href="/user/list">전체 직원 조회</a>
 		                  <a class="dropdown-item" href="/auth/register">직원 추가</a>
 		                </div>
 		            </li>
