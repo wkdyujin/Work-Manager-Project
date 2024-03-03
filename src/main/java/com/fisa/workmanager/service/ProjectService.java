@@ -1,5 +1,6 @@
 package com.fisa.workmanager.service;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -39,9 +40,12 @@ public class ProjectService {
 		Employee employee = result.get();
 		
 		// 2. 현재 사용자(팀장)을 PM으로 프로젝트에 투입
-		ProjectEmployee projectEmployee = new ProjectEmployee();
-		projectEmployee.setProject(project);
-		projectEmployee.setEmployee(employee);
+		ProjectEmployee projectEmployee = new ProjectEmployee().builder()
+				.project(project)
+				.employee(employee)
+				.enterDate(new Date())
+				.role("PM")
+				.build();
 		projectEmployeeRepo.save(projectEmployee);
 		
 		return project.getId();

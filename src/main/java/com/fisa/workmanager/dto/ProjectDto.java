@@ -2,6 +2,8 @@ package com.fisa.workmanager.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fisa.workmanager.model.entity.Project;
 
 import lombok.AllArgsConstructor;
@@ -19,9 +21,13 @@ public class ProjectDto {
 	private String pname;
 	private String description;
 	private String client;
-	private Date startDate;
-	private Date deadline;
 	private double budget;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startDate;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date deadline;
 
 	public Project toEntity() {
 		return Project.builder()
