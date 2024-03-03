@@ -2,6 +2,8 @@ package com.fisa.workmanager.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.model.entity.Employee.GenderType;
 import com.fisa.workmanager.model.entity.Employee.RoleType;
@@ -24,10 +26,14 @@ public class EmployeeDto {
     private String gender;
     private String role;
     private String email;
-    private Date birth;
     private String tel;
     private String location;
     private Double salary;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birth;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date hiredate;
 
     public Employee toEntity(String empId) {
