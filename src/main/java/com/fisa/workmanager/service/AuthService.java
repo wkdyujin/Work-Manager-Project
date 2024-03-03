@@ -33,8 +33,7 @@ public class AuthService {
 	@Transactional
 	public void createUser(EmployeeDto empDto, String prefix) {
 		String empId = generateEmpId(prefix);
-		Employee employee = empDto.toEntity(empId);
-		System.out.println(employee.getEname() + " " + employee.getGender() + " " + employee.getHiredate());
+		Employee employee = empDto.toEntity(empId);;
 		authRepo.save(employee);
 	}
 	

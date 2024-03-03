@@ -30,9 +30,10 @@ public class UserController {
 	}
 	
 	@GetMapping("/{id}")
-	public EmployeeDto getUserById(@PathVariable("id") Long id) {
+	public String getUserById(@PathVariable("id") Long id, Model model) {
 		EmployeeDto empDto = userService.getUser(id);
-		return empDto;
+		model.addAttribute("user", empDto);
+		return "user/detail";
 	}
 
 }

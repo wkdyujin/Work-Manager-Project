@@ -35,12 +35,14 @@
                     <tr>
                         <td>${user.ename}</td>
                         <td><a href="${user.id}">${user.name}</a></td>
-                        <c:choose>
-                            <c:when test="${user.role == 'USER'}">사원</c:when>
-                            <c:when test="${user.role == 'ADMIN'}">관리자</c:when>
-                            <c:when test="${user.role == 'MANAGER'}">팀장</c:when>
-                            <c:otherwise>미정</c:otherwise>
-                        </c:choose>
+                        <td>
+	                        <c:choose>
+	                            <c:when test="${user.role == 'USER'}">사원</c:when>
+	                            <c:when test="${user.role == 'ADMIN'}">관리자</c:when>
+	                            <c:when test="${user.role == 'MANAGER'}">팀장</c:when>
+	                            <c:otherwise>미기입</c:otherwise>
+	                        </c:choose>
+                        </td>
                         <td><fmt:formatNumber value="${user.salary}" pattern="#,###"/></td>
                         <td>${user.tel}</td>
                         <td>${user.email}</td>

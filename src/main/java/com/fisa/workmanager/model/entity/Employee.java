@@ -1,6 +1,5 @@
 package com.fisa.workmanager.model.entity;
 
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
 
@@ -64,16 +63,12 @@ public class Employee {
 				.password(this.password)
 				.role(this.role.toString())
 				.gender(this.gender.toString())
-				.birth(Optional.ofNullable(this.birth)
-                        .map(b -> b.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
-                        .orElse(null))
+				.birth(Optional.ofNullable(this.birth).orElse(null))
 				.email(this.email)
 				.tel(this.tel)
 				.location(this.location)
 				.salary(this.salary)
-				.hiredate(Optional.ofNullable(this.hiredate)
-                        .map(b -> b.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
-                        .orElse(null))
+				.hiredate(Optional.ofNullable(this.hiredate).orElse(null))
 				.build();
 	}
 }

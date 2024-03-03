@@ -1,7 +1,6 @@
 package com.fisa.workmanager.dto;
 
-import java.time.LocalDate;
-import java.util.Optional;
+import java.util.Date;
 
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.model.entity.Employee.GenderType;
@@ -25,11 +24,11 @@ public class EmployeeDto {
     private String gender;
     private String role;
     private String email;
-    private LocalDate birth;
+    private Date birth;
     private String tel;
     private String location;
     private Double salary;
-    private LocalDate hiredate;
+    private Date hiredate;
 
     public Employee toEntity(String empId) {
         GenderType genderType;
@@ -54,11 +53,11 @@ public class EmployeeDto {
                 .gender(genderType)
                 .role(roleType)
                 .email(this.email)
-                .birth(Optional.ofNullable(this.birth).map(java.sql.Date::valueOf).orElse(null))
+                .birth(this.birth)
                 .tel(this.tel)
                 .location(this.location)
                 .salary(this.salary)
-                .hiredate(Optional.ofNullable(this.hiredate).map(java.sql.Date::valueOf).orElse(null))
+                .hiredate(this.hiredate)
                 .build();
     }
 }

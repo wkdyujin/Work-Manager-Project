@@ -3,11 +3,7 @@ package com.fisa.workmanager.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.fisa.workmanager.dto.EmployeeDto;
 import com.fisa.workmanager.model.entity.Employee;

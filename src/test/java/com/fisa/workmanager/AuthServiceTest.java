@@ -2,15 +2,11 @@ package com.fisa.workmanager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDate;
-import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fisa.workmanager.dto.EmployeeDto;
-import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.service.AuthService;
 import com.fisa.workmanager.service.UserService;
 
@@ -38,7 +34,7 @@ public class AuthServiceTest {
 		
 		// then
 		// 저장한 User 레포지토리에 있는 검증
-		EmployeeDto findEmp = userService.getUser((long) 1);
+		EmployeeDto findEmp = userService.getUser(6L); // 마지막+1 index로 수정 필
 		assertThat(emp.getName()).isEqualTo(findEmp.getName());
 	}
 }
