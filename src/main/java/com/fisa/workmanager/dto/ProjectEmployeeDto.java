@@ -25,6 +25,7 @@ public class ProjectEmployeeDto {
 	
 	// employee Entity
 	private Long eid;
+	private String ename;
 	private String name;
 	
 	// projcetEmployee Entity

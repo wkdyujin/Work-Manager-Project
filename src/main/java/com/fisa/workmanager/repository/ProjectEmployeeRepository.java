@@ -15,7 +15,7 @@ import com.fisa.workmanager.model.entity.id.ProjectEmployeeId;
 public interface ProjectEmployeeRepository extends JpaRepository<ProjectEmployee, ProjectEmployeeId> {
 
 	// JPQL을 사용하여 Project, ProjectEmployee, Employee 조인
-    @Query("SELECT new com.fisa.workmanager.dto.ProjectEmployeeDto(pe.project.id, pe.project.pname, pe.project.description, pe.project.client, pe.project.budget, pe.project.startDate, pe.project.deadline, pe.employee.id, pe.employee.name, pe.role, pe.enterDate) " +
+    @Query("SELECT new com.fisa.workmanager.dto.ProjectEmployeeDto(pe.project.id, pe.project.pname, pe.project.description, pe.project.client, pe.project.budget, pe.project.startDate, pe.project.deadline, pe.employee.id, pe.employee.ename, pe.employee.name, pe.role, pe.enterDate) " +
            "FROM ProjectEmployee pe " +
            "WHERE pe.project.id = :projectId")
     List<ProjectEmployeeDto> findByProjectId(@Param("projectId") Long projectId);
