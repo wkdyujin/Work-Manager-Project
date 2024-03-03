@@ -7,14 +7,20 @@ import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.model.entity.Employee.GenderType;
 import com.fisa.workmanager.model.entity.Employee.RoleType;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
+@Setter @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeDto {
+	private Long id;
+	private String ename;
+	private String password;
     private String name;
     private String gender;
     private String role;
@@ -24,7 +30,6 @@ public class EmployeeDto {
     private String location;
     private Double salary;
     private LocalDate hiredate;
-    // 기타 필드 및 메소드 생략
 
     public Employee toEntity(String empId) {
         GenderType genderType;
@@ -42,6 +47,7 @@ public class EmployeeDto {
         }
 
         return Employee.builder()
+        		.id(this.id)
                 .name(this.name)
                 .ename(empId)
                 .password(empId)

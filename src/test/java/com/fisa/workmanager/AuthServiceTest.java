@@ -38,7 +38,7 @@ public class AuthServiceTest {
 		
 		// then
 		// 저장한 User 레포지토리에 있는 검증
-		Optional<Employee> findEmp = userService.getUser((long) 3);
-		assertThat(emp.getName()).isEqualTo(findEmp.get().getName());
+		EmployeeDto findEmp = userService.getUser((long) 1);
+		assertThat(emp.getName()).isEqualTo(findEmp.getName());
 	}
 }
