@@ -39,11 +39,11 @@
 			        <label for="employee">사원</label>
 			    </div>
 			    <div>
-			        <input type="radio" id="team_leader" name="role" value="TEAM_LEADER">
+			        <input type="radio" id="team_leader" name="role" value="MANAGER">
 			        <label for="team_leader">팀장</label>
 			    </div>
 			    <div>
-			        <input type="radio" id="manager" name="role" value="MANAGER">
+			        <input type="radio" id="manager" name="role" value="ADMIN">
 			        <label for="manager">관리자</label>
 			    </div>
 			</div>
