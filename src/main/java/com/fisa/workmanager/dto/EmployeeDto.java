@@ -1,43 +1,63 @@
 package com.fisa.workmanager.dto;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.model.entity.Employee.GenderType;
 import com.fisa.workmanager.model.entity.Employee.RoleType;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
+@Setter @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeDto {
+	private Long id;
+	private String ename;
+	private String password;
     private String name;
     private String gender;
     private String role;
     private String email;
-    private LocalDate birth;
+    private Date birth;
     private String tel;
     private String location;
     private Double salary;
-    private LocalDate hiredate;
-    // 기타 필드 및 메소드 생략
+    private Date hiredate;
 
     public Employee toEntity(String empId) {
+        GenderType genderType;
+        try {
+            genderType = GenderType.valueOf(this.gender.toUpperCase());
+        } catch (Exception e) {
+            genderType = GenderType.MALE;
+        }
+
+        RoleType roleType;
+        try {
+            roleType = RoleType.valueOf(this.role.toUpperCase());
+        } catch (Exception e) {
+            roleType = RoleType.USER;
+        }
+
         return Employee.builder()
+        		.id(this.id)
                 .name(this.name)
                 .ename(empId)
                 .password(empId)
-                .gender(GenderType.valueOf(this.gender))
-                .role(RoleType.valueOf(this.role))
+                .gender(genderType)
+                .role(roleType)
                 .email(this.email)
-                .birth(java.sql.Date.valueOf(this.birth))
+                .birth(this.birth)
                 .tel(this.tel)
                 .location(this.location)
                 .salary(this.salary)
-                .hiredate(java.sql.Date.valueOf(this.hiredate))
+                .hiredate(this.hiredate)
                 .build();
     }
 }

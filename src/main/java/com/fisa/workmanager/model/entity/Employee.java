@@ -1,6 +1,9 @@
 package com.fisa.workmanager.model.entity;
 
 import java.util.Date;
+import java.util.Optional;
+
+import com.fisa.workmanager.dto.EmployeeDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,11 +17,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 @Builder
 @Entity
 public class Employee {
@@ -50,4 +54,21 @@ public class Employee {
 	public enum RoleType {
         USER, MANAGER, ADMIN
     }
+	
+	public EmployeeDto toDto() {
+		return EmployeeDto.builder()
+				.id(this.id)
+				.name(this.name)
+				.ename(this.ename)
+				.password(this.password)
+				.role(this.role.toString())
+				.gender(this.gender.toString())
+				.birth(Optional.ofNullable(this.birth).orElse(null))
+				.email(this.email)
+				.tel(this.tel)
+				.location(this.location)
+				.salary(this.salary)
+				.hiredate(Optional.ofNullable(this.hiredate).orElse(null))
+				.build();
+	}
 }
