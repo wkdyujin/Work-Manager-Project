@@ -58,4 +58,9 @@ public class EvaluationController {
         redirectAttributes.addFlashAttribute("message", "파일이 성공적으로 처리되었습니다.");
         return "redirect:/project/detail/" + id;
     }
+	
+	@GetMapping("/internal/form/{id}")
+	public String createInternalEvalFrom(@PathVariable Long id) {
+		return "evaluation/internalEval";
+	}
 }
