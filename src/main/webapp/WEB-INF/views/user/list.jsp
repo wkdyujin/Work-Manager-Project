@@ -11,14 +11,18 @@
             max-width: 90%;
             margin: auto;
         }
+        .item {
+        	margin-top: 10px
+        }
     </style>
 </head>
 <body>
     <%@include file="/WEB-INF/views/include/header.jsp"%>
-    <button class="btn btn-primary">사원 추가</button>
 
     <div class="table-responsive">
-        <table class="table">
+    	<a class="btn btn-primary item" href="/auth/register">신규 사원 등록</a>
+    	
+        <table class="table item">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">사번</th>

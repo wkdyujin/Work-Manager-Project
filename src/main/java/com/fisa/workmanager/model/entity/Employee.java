@@ -31,6 +31,8 @@ public class Employee {
 	@Column(name = "e_id")
 	private Long id;
 	private String name;
+	
+	@Column(name = "ename", unique = true)
 	private String ename;
 	private String password;
 	

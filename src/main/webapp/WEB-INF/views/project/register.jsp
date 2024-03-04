@@ -5,12 +5,21 @@
     <meta charset="UTF-8">
     <title>Create Project</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+    	.title {
+    		margin-bottom: 30px;
+    	}
+		.btn {
+			margin-bottom: 10px;
+		}
+    </style>
 </head>
 <body>
     <%@include file="/WEB-INF/views/include/header.jsp"%>
     
     <div class="container mt-5">
-        <h2>프로젝트 생성</h2>
+        <h4 class="title"><b>신규 프로젝트 생성</b></h4>
+        
         <form action="/project/register" method="POST">
             <div class="form-group">
                 <label for="pname">프로젝트명</label>
@@ -36,7 +45,7 @@
                 <label for="deadline">마감일</label>
                 <input type="date" class="form-control" id="deadline" name="deadline">
             </div>
-            <button type="submit" class="btn btn-primary">프로젝트 생성</button>
+            <button type="submit" class="btn btn-primary">등록</button>
         </form>
     </div>
 </body>

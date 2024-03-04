@@ -20,7 +20,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6">
-                <h3>사원 정보</h3>
+                <h4 claa="title"><b>사원 정보</b></h4>
                 <div class="form-group">
                     <label for="ename">사번:</label>
                     <input type="text" class="form-control" id="ename" value="${user.ename}" readonly>
@@ -65,7 +65,7 @@
             </div>
             
             <div class="col-md-6">
-                <h3>참여 프로젝트</h3>
+                <h4 claa="title"><b>참여 프로젝트</b></h4>
                 <!-- 프로젝트 정보= -->
             </div>
         </div>

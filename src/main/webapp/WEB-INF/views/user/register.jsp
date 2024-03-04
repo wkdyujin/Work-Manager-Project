@@ -6,11 +6,19 @@
 	<meta charset="UTF-8">
 	<title>직원 추가</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<style>
+		.btn {
+			margin-bottom: 10px;
+		}
+		.row-item {
+			margin-right: 100px;
+		}
+	</style>
 </head>
 <body>
     <%@include file="/WEB-INF/views/include/header.jsp" %>
     <div class="container mt-5">
-        <h2 class="mb-4">직원 추가</h2>
+        <h4 class="mb-4"><b>신규 사원 등록</b></h4>
         <c:if test="${!empty errorMessage }">
         	<p style="color: red;">${errorMessage}</p>
         </c:if>
@@ -19,33 +27,37 @@
                 <label for="name">이름:</label>
                 <input type="text" class="form-control" id="name" name="name" required>
             </div>
-            
-            <div class="form-group">
-			    <label for="gender">성별:</label>
-			    <div>
-			        <input type="radio" id="male" name="gender" value="MALE" required>
-			        <label for="male">남자</label>
-			    </div>
-			    <div>
-			        <input type="radio" id="female" name="gender" value="FEMALE">
-			        <label for="female">여자</label>
-			    </div>
-			</div>
-			
-            <div class="form-group">
-			    <label for="role">권한:</label>
-			    <div>
-			        <input type="radio" id="employee" name="role" value="USER" required>
-			        <label for="employee">사원</label>
-			    </div>
-			    <div>
-			        <input type="radio" id="team_leader" name="role" value="MANAGER">
-			        <label for="team_leader">팀장</label>
-			    </div>
-			    <div>
-			        <input type="radio" id="manager" name="role" value="ADMIN">
-			        <label for="manager">관리자</label>
-			    </div>
+			<div class="row container">
+				<div class="row-item">
+		            <div class="form-group">
+					    <label for="role">권한:</label>
+					    <div>
+					        <input type="radio" id="employee" name="role" value="USER" required>
+					        <label for="employee">사원</label>
+					    </div>
+					    <div>
+					        <input type="radio" id="team_leader" name="role" value="MANAGER">
+					        <label for="team_leader">팀장</label>
+					    </div>
+					    <div>
+					        <input type="radio" id="manager" name="role" value="ADMIN">
+					        <label for="manager">관리자</label>
+					    </div>
+					</div>
+				</div>
+				<div class="row-item">
+					<div class="form-group">
+					    <label for="gender">성별:</label>
+					    <div>
+					        <input type="radio" id="male" name="gender" value="MALE" required>
+					        <label for="male">남자</label>
+					    </div>
+					    <div>
+					        <input type="radio" id="female" name="gender" value="FEMALE">
+					        <label for="female">여자</label>
+					    </div>
+					</div>
+				</div>
 			</div>
 
             <div class="form-group">
