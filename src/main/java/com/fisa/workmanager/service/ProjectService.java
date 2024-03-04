@@ -57,8 +57,8 @@ public class ProjectService {
 		return project.getId();
 	}
 
-	public List<ProjectEmployeeDto> getProjectEmployee(Long id) {
-		List<ProjectEmployeeDto> peDtoList = projectEmployeeRepo.findByProjectId(id);
+	public List<ProjectEmployeeDto> getProjectEmployee(Long pid, Long eid) {
+		List<ProjectEmployeeDto> peDtoList = projectEmployeeRepo.findProEmpWithoutPm(pid, eid);
 		return peDtoList;
 	}
 
@@ -92,5 +92,17 @@ public class ProjectService {
 		}
 		projectEmployeeRepo.saveAll(projectEmployees);
 	    return enterDto;
+	}
+	
+	public ProjectEmployeeDto getProjEmp(Long pid, Long eid) { // 해당 프로젝트 참여여부 검증
+		System.out.println(pid + " " + eid);
+		Optional<ProjectEmployeeDto> res = projectEmployeeRepo.findDtoByEidAndPid(eid, pid);
+		if (res.isPresent()) {
+			System.out.println(res.get().getEid());
+			return res.get();
+		} else {
+			System.out.println(res);
+			throw new RuntimeException("해당 프로젝트에 참여하지 않은 사원입니다.");
+		}
 	}
 }

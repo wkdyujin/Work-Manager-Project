@@ -65,7 +65,7 @@
 		                  <a class="dropdown-item" href="/evaluate">전체 평가 조회</a>
 		            	</c:if>
 	            		<c:if test="${session.role == 'MANAGER'|| session.role == 'USER'}">
-		                  <a class="dropdown-item" href="/CreateEvaluate">평가 작성</a>
+		                  <a class="dropdown-item" href="/evaluation/internal/form/1">평가 작성</a> <!-- TODO: 마감&평가 미완료 프로젝트 리스트로 연 -->
 		            	</c:if>
 	                </div>
 	            </li>
