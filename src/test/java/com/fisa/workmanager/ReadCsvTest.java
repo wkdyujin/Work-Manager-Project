@@ -24,7 +24,7 @@ public class ReadCsvTest {
 
     //This constructor is for read CSV File
     @Test
-//    public void GoCSV() throws IOException {
+    public void GoCSV() throws IOException {
 //    	String filePath = "src\\main\\resources\\static\\estimation.csv";
 //        this.filePath = filePath;
 //        bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(this.filePath), "UTF-8"));
@@ -40,22 +40,22 @@ public class ReadCsvTest {
 //            }
 //            System.out.println();
 //        }
-//    }
-//
-//    public void makeList(BufferedReader bufferedReader) throws IOException {
-//        String line = null;
-//        while((line = bufferedReader.readLine())!=null) {
-//            String[] lineContents = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)",-1);
-//
-//            readCSV.add(lineContents);
-//        }
-//    }
-//
-//    //한 행을 읽음
-//    public String[] nextRead(){
-//        if(readCSV.size() == index){
-//            return null;
-//        }
-//        return readCSV.get(index++);
-//    }
+    }
+
+    public void makeList(BufferedReader bufferedReader) throws IOException {
+        String line = null;
+        while((line = bufferedReader.readLine())!=null) {
+            String[] lineContents = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)",-1);
+
+            readCSV.add(lineContents);
+        }
+    }
+
+    //한 행을 읽음
+    public String[] nextRead(){
+        if(readCSV.size() == index){
+            return null;
+        }
+        return readCSV.get(index++);
+    }
 }
