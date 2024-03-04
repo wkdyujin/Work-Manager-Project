@@ -84,16 +84,14 @@ public class EvaluationController {
 		
 		// 현재 사용자가 peDtoList에 포함되어 있는지 확인
 		Long empId = getEmpId(session);
-        boolean isAuthorized = peDtoList.stream().anyMatch(peDto -> peDto.getEid().equals(empId));
-
-        if (!isAuthorized) {
-            // 현재 사용자가 목록에 없으면 권한 없음 메시지를 보여주고 리다이렉트
-            redirectAttributes.addFlashAttribute("errorMsg", "권한이 없습니다.");
-            return "redirect:/project/detail/" + pid; // 적절한 리다이렉트 대상 지정
-        }
-		
-		model.addAttribute("peDtoList", peDtoList);
-		return "evaluation/internalEval";
+		try {
+			projectService.getProjEmp(pid, empId);
+			model.addAttribute("peDtoList", peDtoList);
+			return "evaluation/internalEval";
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("errorMsg", "권한이 없습니다.");
+            return "redirect:/project/detail/" + pid;
+		}
 	}
 
 	@CheckLogin
