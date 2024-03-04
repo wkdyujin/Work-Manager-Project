@@ -29,10 +29,7 @@
             
             <c:if test="${session.role == 'MANAGER' && isDeadlinePassed}">
 	           	<a href="/project/csv/${project[0].pid}" class="btn btn-primary">평가 시트 추출</a>
-				<form action="/project/uploadCsv" method="post" enctype="multipart/form-data">
-				    <input type="file" name="file" />
-				    <button type="submit" class="btn btn-primary">평가 시트 등록</button>
-				</form>
+			    <a href="/evaluation/client/form/${project[0].pid}" class="btn btn-primary">평가 시트 등록</a>
             </c:if>
         </div>
         

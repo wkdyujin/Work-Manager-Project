@@ -16,4 +16,6 @@ public interface AuthRepository extends JpaRepository<Employee, Long>{
 	
 	@Query("SELECT COALESCE(MAX(e.id), 0) FROM Employee e")
     Long findMaxId();
+	
+	Optional<Employee> findByEname(String ename);
 }
