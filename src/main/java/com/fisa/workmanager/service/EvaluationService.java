@@ -7,12 +7,14 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.fisa.workmanager.dto.PeerEvalDto;
 import com.fisa.workmanager.dto.PmCustomerEvalDto;
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.model.entity.PmCustomerEvaluation;
 import com.fisa.workmanager.model.entity.PmCustomerEvaluation.EvaluationType;
 import com.fisa.workmanager.model.entity.Project;
 import com.fisa.workmanager.repository.AuthRepository;
+import com.fisa.workmanager.repository.PeerEvalRepository;
 import com.fisa.workmanager.repository.PmCustomerEvalRepository;
 import com.fisa.workmanager.repository.ProjectRepository;
 
@@ -23,11 +25,13 @@ public class EvaluationService {
 	private PmCustomerEvalRepository pmCustomerEvalRepo;
 	private AuthRepository authRepository;
 	private ProjectRepository projectRepository;
+	private PeerEvalRepository peerEvalRepository;
 	
-	EvaluationService(PmCustomerEvalRepository pmCustomerEvalRepo, AuthRepository authRepository, ProjectRepository projectRepository) {
+	EvaluationService(PmCustomerEvalRepository pmCustomerEvalRepo, AuthRepository authRepository, ProjectRepository projectRepository, PeerEvalRepository peerEvalRepository) {
 		this.pmCustomerEvalRepo = pmCustomerEvalRepo;
 		this.authRepository = authRepository;
 		this.projectRepository = projectRepository;
+		this.peerEvalRepository = peerEvalRepository;
 	}
 	
 	private Project getProject(Long pid) {
@@ -77,12 +81,22 @@ public class EvaluationService {
 	public void createPmEval(Long pid, Long eid, PmCustomerEvalDto dto) {
 		Project project = getProject(pid);
 		Employee employee = getEmployee(eid);
+		
 		dto.setProject(project);
 		dto.setEmployee(employee);
+		
 		pmCustomerEvalRepo.save(dto.toEntity());
 	}
 	
-	public void createPeerEval() {
-		return;
+	public void createPeerEval(Long pid, Long eid, Long evaluatorId, PeerEvalDto dto) {
+		Project project = getProject(pid);
+		Employee evaluatee = getEmployee(eid);
+		Employee evaluator = getEmployee(evaluatorId);
+		
+		dto.setProject(project);
+		dto.setEvaluatee(evaluatee);
+		dto.setEvaluator(evaluator);
+		
+		peerEvalRepository.save(dto.toEntity());
 	}
 }

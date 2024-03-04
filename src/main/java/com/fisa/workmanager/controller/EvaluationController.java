@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fisa.workmanager.annotation.CheckLogin;
 import com.fisa.workmanager.dto.AuthDto;
 import com.fisa.workmanager.dto.EvaluationDto;
+import com.fisa.workmanager.dto.PeerEvalDto;
 import com.fisa.workmanager.dto.PmCustomerEvalDto;
 import com.fisa.workmanager.dto.ProjectEmployeeDto;
 import com.fisa.workmanager.service.EvaluationService;
@@ -117,6 +118,11 @@ public class EvaluationController {
 
 	@CheckLogin
 	private void registPeerEval(Long pid, Long eid, Long evaluatorId, EvaluationDto dto) {
+		PeerEvalDto peerEvalDto = new PeerEvalDto().builder()
+    			.score(dto.getScore())
+    			.comment(dto.getComment())
+    			.build();
+		evaluationService.createPeerEval(pid, eid, evaluatorId, peerEvalDto);
 		return;
 	}
 }
