@@ -30,7 +30,7 @@
         <div class="mt-4">
             <h4 class="title"><b>참여 사원 목록</b></h4>
             <c:if test="${session.role == 'MANAGER'}">
-            	<a class="btn btn-primary mb-3" href="/path/to/add/employee">추가 직원 투입</a>
+            	<a class="btn btn-primary mb-3" href="/project/employee/${project[0].pid}">추가 직원 투입</a>
             </c:if>
             
             <table class="table table-striped">

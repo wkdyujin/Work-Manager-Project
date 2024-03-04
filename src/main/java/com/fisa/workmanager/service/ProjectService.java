@@ -61,4 +61,12 @@ public class ProjectService {
 	public List<Project> getAllProject() {
 		return projectRepo.findAll();
 	}
+
+	public ProjectDto getProject(Long id) {
+		Optional<Project> result = projectRepo.findById(id);
+		if (result.isPresent()) {
+			return result.get().toDto();
+		}
+		throw new RuntimeException("존재하지 않는 프로젝트입니다.");
+	}
 }

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.fisa.workmanager.dto.AuthDto;
 import com.fisa.workmanager.dto.ProjectDto;
 import com.fisa.workmanager.dto.ProjectEmployeeDto;
+import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.service.ProjectService;
+import com.fisa.workmanager.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -21,9 +23,11 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/project")
 public class ProjectController {
 	private ProjectService projectService;
+	private UserService userService;
 	
-	ProjectController(ProjectService projectService) {
+	ProjectController(ProjectService projectService, UserService userService) {
 		this.projectService = projectService;
+		this.userService = userService;
 	}
 	
 	@GetMapping("/register")
@@ -50,4 +54,14 @@ public class ProjectController {
 		model.addAttribute("projectList", projectService.getAllProject());
 		return "project/list";
 	}
+	
+	@GetMapping("employee/{id}")
+	public String enterForm(@PathVariable("id") Long id, Model model) {
+		ProjectDto projectDto = projectService.getProject(id);
+		List<Employee> empList = userService.getUserList();
+		model.addAttribute("project", projectDto);
+		model.addAttribute("empList", empList);
+		return "project/enter";
+	}
+	
 }
