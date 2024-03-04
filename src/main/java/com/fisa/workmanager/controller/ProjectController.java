@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fisa.workmanager.dto.AuthDto;
+import com.fisa.workmanager.dto.EnterDto;
 import com.fisa.workmanager.dto.ProjectDto;
 import com.fisa.workmanager.dto.ProjectEmployeeDto;
 import com.fisa.workmanager.model.entity.Employee;
@@ -62,6 +63,13 @@ public class ProjectController {
 		model.addAttribute("project", projectDto);
 		model.addAttribute("empList", empList);
 		return "project/enter";
+	}
+	
+	@PostMapping("employee/{id}")
+	public String enterEmpToProj(@PathVariable("id") Long id, @ModelAttribute EnterDto enterDto) {
+		enterDto.setPid(id);
+		EnterDto resultDto = projectService.enterEmp(enterDto);
+		return "redirect:/project/detail/" + id;
 	}
 	
 }

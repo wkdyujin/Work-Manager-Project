@@ -57,7 +57,7 @@
         
         <div class="employeeInputs">
             <h4 class="title"><b>투입할 직원</b></h4>
-            <form action="/project/enter" method="POST" id="enterForm">
+            <form action="/project/employee/${project.id}" method="POST" id="enterForm">
                 <button type="submit" class="btn btn-primary">등록</button>
                 <div id="employeeInputsContainer"></div>
             </form>

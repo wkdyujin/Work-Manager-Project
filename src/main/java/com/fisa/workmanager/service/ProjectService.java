@@ -1,11 +1,14 @@
 package com.fisa.workmanager.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.fisa.workmanager.dto.EnterDto;
+import com.fisa.workmanager.dto.EnterDto.EnterEmployeeDto;
 import com.fisa.workmanager.dto.ProjectDto;
 import com.fisa.workmanager.dto.ProjectEmployeeDto;
 import com.fisa.workmanager.model.entity.Employee;
@@ -15,6 +18,7 @@ import com.fisa.workmanager.repository.AuthRepository;
 import com.fisa.workmanager.repository.ProjectEmployeeRepository;
 import com.fisa.workmanager.repository.ProjectRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -68,5 +72,25 @@ public class ProjectService {
 			return result.get().toDto();
 		}
 		throw new RuntimeException("존재하지 않는 프로젝트입니다.");
+	}
+
+	@Transactional
+	public EnterDto enterEmp(EnterDto enterDto) {
+		Project project = projectRepo.findById(enterDto.getPid())
+                .orElseThrow(() -> new EntityNotFoundException("Project not found"));
+		
+		List<ProjectEmployee> projectEmployees = new ArrayList<>();
+		for (EnterEmployeeDto empDto: enterDto.getEnterEmpList()) {
+			Employee employee = authRepo.findById(empDto.getEid())
+	            .orElseThrow(() -> new EntityNotFoundException("Employee not found with id: " + empDto.getEid()));
+	        ProjectEmployee projectEmployee = new ProjectEmployee();
+	        projectEmployee.setProject(project);
+	        projectEmployee.setEmployee(employee);
+	        projectEmployee.setRole(empDto.getRole());
+	        projectEmployee.setEnterDate(empDto.getEnterDate());
+	        projectEmployees.add(projectEmployee);
+		}
+		projectEmployeeRepo.saveAll(projectEmployees);
+	    return enterDto;
 	}
 }
