@@ -46,7 +46,7 @@
                     <c:forEach var="user" items="${empList}">
                         <tr onclick="addEmployee('${user.id}', '${user.ename}', '${user.name}');">
                             <td>${user.ename}</td>
-                            <td style="cursor: pointer;">${user.name}</td>
+                            <td style="cursor: pointer; color: blue;">${user.name}</td>
                             <td>${user.email}</td>
                             <td><fmt:formatDate value="${user.hiredate}" pattern="yyyy-MM-dd"/></td>
                         </tr>
