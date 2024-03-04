@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.fisa.workmanager.annotation.CheckLogin;
 import com.fisa.workmanager.dto.AuthDto;
 import com.fisa.workmanager.dto.EnterDto;
 import com.fisa.workmanager.dto.ProjectDto;
@@ -31,39 +32,49 @@ public class ProjectController {
 	private ProjectService projectService;
 	private UserService userService;
 	
+	private Long getEmpId(HttpSession session) {
+		AuthDto dto = (AuthDto) session.getAttribute("session");
+		return dto.getId();
+	}
+	
 	ProjectController(ProjectService projectService, UserService userService) {
 		this.projectService = projectService;
 		this.userService = userService;
 	}
-	
+
+	@CheckLogin
 	@GetMapping("/register")
 	public String createProject() {
 		return "project/register";
 	}
-	
+
+	@CheckLogin
 	@PostMapping("/register")
 	public String createProejct(@ModelAttribute("projectForm") ProjectDto projectDto, HttpSession session) {
 		AuthDto authDto = (AuthDto) session.getAttribute("session");
 		Long projectId = projectService.createProject(projectDto, authDto.getId());
 		return "redirect:/project/detail/" + projectId;
 	}
-	
-	@GetMapping("/detail/{id}")
-	public String getProject(@PathVariable("id") Long id, Model model) {
-		List<ProjectEmployeeDto> peDtoList = projectService.getProjectEmployee(id);
+
+	@CheckLogin
+	@GetMapping("/detail/{pid}")
+	public String getProject(@PathVariable("pid") Long pid, Model model, HttpSession session) {
+		List<ProjectEmployeeDto> peDtoList = projectService.getProjectEmployee(pid, getEmpId(session));
 		model.addAttribute("project", peDtoList);
 		
 		boolean isDeadlinePassed = peDtoList.get(0).getDeadline().before(new Date());
 		model.addAttribute("isDeadlinePassed", isDeadlinePassed);
 		return "project/detail";
 	}
-	
+
+	@CheckLogin
 	@GetMapping("/list")
 	public String getProjectList(Model model) {
 		model.addAttribute("projectList", projectService.getAllProject());
 		return "project/list";
 	}
-	
+
+	@CheckLogin
 	@GetMapping("employee/{id}")
 	public String enterForm(@PathVariable("id") Long id, Model model) {
 		ProjectDto projectDto = projectService.getProject(id);
@@ -72,18 +83,20 @@ public class ProjectController {
 		model.addAttribute("empList", empList);
 		return "project/enter";
 	}
-	
+
+	@CheckLogin
 	@PostMapping("employee/{id}")
 	public String enterEmpToProj(@PathVariable("id") Long id, @ModelAttribute EnterDto enterDto) {
 		enterDto.setPid(id);
 		EnterDto resultDto = projectService.enterEmp(enterDto);
 		return "redirect:/project/detail/" + id;
 	}
-	
+
+	@CheckLogin
 	@GetMapping("/csv/{id}")
-	public void downloadCsv(@PathVariable("id") Long projectId, HttpServletResponse response) throws IOException {
+	public void downloadCsv(@PathVariable("id") Long projectId, HttpServletResponse response, HttpSession session) throws IOException {
 	    // 프로젝트 ID를 기반으로 참여 사원 목록 조회
-	    List<ProjectEmployeeDto> employeeList = projectService.getProjectEmployee(projectId);
+	    List<ProjectEmployeeDto> employeeList = projectService.getProjectEmployee(projectId, getEmpId(session));
 
 	    // CSV 파일 헤더 설정
 	    response.setContentType("text/csv; charset=UTF-8");

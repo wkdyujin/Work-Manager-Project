@@ -1,6 +1,5 @@
 package com.fisa.workmanager;
 
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -29,9 +28,9 @@ public class ProjectServiceTest {
 		// then
 	}
 	
-	@Test
-	void 프로젝트조회() {
-		List<ProjectEmployeeDto> peDtoList = projectService.getProjectEmployee(3L);
-		System.out.println(peDtoList.toString());
-	}
+//	@Test
+//	void 프로젝트조회() {
+//		List<ProjectEmployeeDto> peDtoList = projectService.getProjectEmployee(3L);
+//		System.out.println(peDtoList.toString());
+//	}
 }

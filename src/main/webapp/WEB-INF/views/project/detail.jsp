@@ -31,6 +31,10 @@
 			    <a href="/evaluation/client/form/${project[0].pid}" class="btn btn-success float-right ml-1">평가표 등록(CSV)</a>
 	           	<a href="/project/csv/${project[0].pid}" class="btn btn-success float-right ml-1">평가표 추출(CSV)</a>
             </c:if>
+            
+            <c:if test="${ errorMsg != null}">
+            	<p style="color:red">${errorMsg}
+            </c:if>
         </div>
         
         <div class="project-info bg-light p-4 rounded">

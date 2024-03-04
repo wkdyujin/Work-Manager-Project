@@ -57,8 +57,8 @@ public class ProjectService {
 		return project.getId();
 	}
 
-	public List<ProjectEmployeeDto> getProjectEmployee(Long id) {
-		List<ProjectEmployeeDto> peDtoList = projectEmployeeRepo.findByProjectId(id);
+	public List<ProjectEmployeeDto> getProjectEmployee(Long pid, Long eid) {
+		List<ProjectEmployeeDto> peDtoList = projectEmployeeRepo.findProEmpWithoutPm(pid, eid);
 		return peDtoList;
 	}
 

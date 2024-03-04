@@ -17,9 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fisa.workmanager.annotation.CheckLogin;
 import com.fisa.workmanager.dto.AuthDto;
+import com.fisa.workmanager.dto.EvaluationDto;
 import com.fisa.workmanager.dto.PmCustomerEvalDto;
+import com.fisa.workmanager.dto.ProjectEmployeeDto;
 import com.fisa.workmanager.service.EvaluationService;
+import com.fisa.workmanager.service.ProjectService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -27,17 +31,26 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/evaluation")
 public class EvaluationController {
 	private EvaluationService evaluationService;
+	private ProjectService projectService;
 	
-	public EvaluationController(EvaluationService evaluationService) {
-		this.evaluationService = evaluationService;
+	private Long getEmpId(HttpSession session) {
+		AuthDto dto = (AuthDto) session.getAttribute("session");
+		return dto.getId();
 	}
 	
+	public EvaluationController(EvaluationService evaluationService, ProjectService projectService) {
+		this.evaluationService = evaluationService;
+		this.projectService = projectService;
+	}
+
+	@CheckLogin
 	@GetMapping("/client/form/{id}")
 	public String createForm(@PathVariable Long id, Model model) {
 		model.addAttribute("id", id);
 		return "evaluation/clientEval";
 	}
 	
+	@CheckLogin
 	@PostMapping("/client/csv/{id}")
 	public String createClientEval(@PathVariable Long id, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         if (file.isEmpty()) {
@@ -64,13 +77,28 @@ public class EvaluationController {
         return "redirect:/project/detail/" + id;
     }
 	
-	@GetMapping("/internal/form/{id}")
-	public String createInternalEvalFrom(@PathVariable Long id) {
+	@CheckLogin
+	@GetMapping("/internal/form/{pid}")
+	public String createInternalEvalFrom(@PathVariable Long pid, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
+		List<ProjectEmployeeDto> peDtoList = projectService.getProjectEmployee(pid, getEmpId(session));
+		
+		// 현재 사용자가 peDtoList에 포함되어 있는지 확인
+		Long empId = getEmpId(session);
+        boolean isAuthorized = peDtoList.stream().anyMatch(peDto -> peDto.getEid().equals(empId));
+
+        if (!isAuthorized) {
+            // 현재 사용자가 목록에 없으면 권한 없음 메시지를 보여주고 리다이렉트
+            redirectAttributes.addFlashAttribute("errorMsg", "권한이 없습니다.");
+            return "redirect:/project/detail/" + pid; // 적절한 리다이렉트 대상 지정
+        }
+		
+		model.addAttribute("peDtoList", peDtoList);
 		return "evaluation/internalEval";
 	}
-	
+
+	@CheckLogin
 	@PostMapping("/internal/{pid}/{eid}")
-	public String registEvaluation(@PathVariable Long pid, @PathVariable Long eid, @ModelAttribute PmCustomerEvalDto dto, HttpSession session) {
+	public String registEvaluation(@PathVariable Long pid, @PathVariable Long eid, @ModelAttribute EvaluationDto dto, HttpSession session) {
 		AuthDto authDto = (AuthDto) session.getAttribute("session");
 		if (authDto.getRole().equals("MANAGER")) {
 			registPmEval(pid, eid, dto);
@@ -79,13 +107,18 @@ public class EvaluationController {
 		}
 		return "redirect:/evaluation/internal/form/" + pid;
 	}
-	
-	private void registPmEval(Long pid, Long eid, PmCustomerEvalDto dto) {
-		evaluationService.createPmEval(pid, eid, dto);
-		return;
+
+	@CheckLogin
+	private void registPmEval(Long pid, Long eid, EvaluationDto dto) {
+		PmCustomerEvalDto pmCusEvalDto = new PmCustomerEvalDto().builder()
+											.score(dto.getScore())
+											.comment(dto.getComment())
+											.build();
+		evaluationService.createPmEval(pid, eid, pmCusEvalDto);
 	}
-	
-	private void registPeerEval(Long pid, Long eid, Long evaluatorId, PmCustomerEvalDto dto) {
+
+	@CheckLogin
+	private void registPeerEval(Long pid, Long eid, Long evaluatorId, EvaluationDto dto) {
 		return;
 	}
 }
