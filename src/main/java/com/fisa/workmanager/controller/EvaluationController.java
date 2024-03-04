@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fisa.workmanager.dto.AuthDto;
+import com.fisa.workmanager.dto.PmCustomerEvalDto;
 import com.fisa.workmanager.service.EvaluationService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/evaluation")
@@ -62,5 +67,25 @@ public class EvaluationController {
 	@GetMapping("/internal/form/{id}")
 	public String createInternalEvalFrom(@PathVariable Long id) {
 		return "evaluation/internalEval";
+	}
+	
+	@PostMapping("/internal/{pid}/{eid}")
+	public String registEvaluation(@PathVariable Long pid, @PathVariable Long eid, @ModelAttribute PmCustomerEvalDto dto, HttpSession session) {
+		AuthDto authDto = (AuthDto) session.getAttribute("session");
+		if (authDto.getRole().equals("MANAGER")) {
+			registPmEval(pid, eid, dto);
+		} else {
+			registPeerEval(pid, eid, authDto.getId(), dto);
+		}
+		return "redirect:/evaluation/internal/form/" + pid;
+	}
+	
+	private void registPmEval(Long pid, Long eid, PmCustomerEvalDto dto) {
+		evaluationService.createPmEval(pid, eid, dto);
+		return;
+	}
+	
+	private void registPeerEval(Long pid, Long eid, Long evaluatorId, PmCustomerEvalDto dto) {
+		return;
 	}
 }
