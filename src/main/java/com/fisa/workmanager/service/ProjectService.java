@@ -49,7 +49,7 @@ public class ProjectService {
 		ProjectEmployee projectEmployee = new ProjectEmployee().builder()
 				.project(project)
 				.employee(employee)
-				.enterDate(new Date())
+				.enterDate(projectDto.getStartDate())
 				.role("PM")
 				.build();
 		projectEmployeeRepo.save(projectEmployee);
