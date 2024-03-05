@@ -84,7 +84,7 @@
                 <label for="hiredate">입사일:</label>
                 <input type="date" class="form-control" id="hiredate" name="hiredate" required>
             </div>
-            <button type="submit" class="btn btn-primary">등록</button>
+            <button type="submit" class="btn btn-primary float-right mb-3">사원 등록</button>
         </form>
     </div>
 </body>

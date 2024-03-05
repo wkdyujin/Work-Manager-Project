@@ -43,7 +43,7 @@
     <div class="container mt-3">
         <div class="employees">
             <h5><b>참여 사원 목록</b></h5>
-            
+            <p style="color: gray;">사원명을 선택하여 평가를 입력할 수 있습니다.</p>
             <table class="table mt-4">
                 <thead>
                     <tr>

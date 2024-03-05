@@ -23,6 +23,7 @@ import com.fisa.workmanager.dto.EvaluationDto;
 import com.fisa.workmanager.dto.PeerEvalDto;
 import com.fisa.workmanager.dto.PmCustomerEvalDto;
 import com.fisa.workmanager.dto.ProjectEmployeeDto;
+import com.fisa.workmanager.model.entity.PmCustomerEvaluation.EvaluationType;
 import com.fisa.workmanager.service.EvaluationService;
 import com.fisa.workmanager.service.ProjectService;
 
@@ -107,16 +108,15 @@ public class EvaluationController {
 		return "redirect:/evaluation/internal/form/" + pid;
 	}
 
-	@CheckLogin
 	private void registPmEval(Long pid, Long eid, EvaluationDto dto) {
 		PmCustomerEvalDto pmCusEvalDto = new PmCustomerEvalDto().builder()
 											.score(dto.getScore())
 											.comment(dto.getComment())
+											.evalType(EvaluationType.PM)
 											.build();
 		evaluationService.createPmEval(pid, eid, pmCusEvalDto);
 	}
 
-	@CheckLogin
 	private void registPeerEval(Long pid, Long eid, Long evaluatorId, EvaluationDto dto) {
 		PeerEvalDto peerEvalDto = new PeerEvalDto().builder()
     			.score(dto.getScore())
@@ -124,5 +124,12 @@ public class EvaluationController {
     			.build();
 		evaluationService.createPeerEval(pid, eid, evaluatorId, peerEvalDto);
 		return;
+	}
+	
+	@CheckLogin
+	@GetMapping("/project/{pid}")
+	public String confirmProjectEval(@PathVariable Long pid, Model model) {
+		// model에 dto 전달
+		return "evaluation/project";
 	}
 }
