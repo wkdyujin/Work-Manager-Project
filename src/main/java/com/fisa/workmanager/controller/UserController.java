@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fisa.workmanager.annotation.CheckLogin;
 import com.fisa.workmanager.dto.EmployeeDto;
+import com.fisa.workmanager.dto.ProjectDto;
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.service.UserService;
 
@@ -32,10 +33,12 @@ public class UserController {
 	}
 
 	@CheckLogin
-	@GetMapping("/{id}")
-	public String getUserById(@PathVariable("id") Long id, Model model) {
-		EmployeeDto empDto = userService.getUser(id);
+	@GetMapping("/{eid}")
+	public String getUserById(@PathVariable("eid") Long eid, Model model) {
+		EmployeeDto empDto = userService.getUserInfo(eid);
 		model.addAttribute("user", empDto);
+		List<ProjectDto> peojectDtoList = userService.getUserProjectList(eid);
+		model.addAttribute("projectList", peojectDtoList);
 		return "user/detail";
 	}
 

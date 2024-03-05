@@ -7,5 +7,5 @@ import com.fisa.workmanager.model.entity.Project;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-
+	
 }

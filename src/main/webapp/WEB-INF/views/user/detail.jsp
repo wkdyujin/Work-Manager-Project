@@ -66,7 +66,26 @@
             
             <div class="col-md-6">
                 <h4 claa="title"><b>참여 프로젝트</b></h4>
-                <!-- 프로젝트 정보= -->
+                <div class="row">
+		            <c:forEach var="project" items="${projectList}">
+		                <div class="col-md-12 mb-3">
+		                    <div class="card h-100" onclick="location.href='/project/detail/${project.id}'" style="cursor: pointer;">
+		                        <div class="card-body">
+		                            <h5 class="card-title">${project.pname}</h5>
+		                            <p class="card-text">${project.description}</p>
+		                            <div class="row container">
+			                            <p class="card-text mr-5">
+			                            	<small class="text-muted">착수일: <fmt:formatDate value="${project.startDate}" pattern="yyyy-MM-dd" /></small>
+			                            </p>
+			                            <p class="card-text">
+			                            	<small class="text-muted">마감일: <fmt:formatDate value="${project.deadline}" pattern="yyyy-MM-dd" /></small>
+			                            </p>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </c:forEach>
+		        </div>
             </div>
         </div>
     </div>

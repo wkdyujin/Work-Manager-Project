@@ -6,15 +6,27 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.fisa.workmanager.dto.EmployeeDto;
+import com.fisa.workmanager.dto.ProjectDto;
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.repository.AuthRepository;
+import com.fisa.workmanager.repository.ProjectEmployeeRepository;
 
 @Service
 public class UserService {
 	private AuthRepository authRepo;
+	private ProjectEmployeeRepository projectEmployeeRepo;
 	
-	UserService(AuthRepository authRepo) {
+	UserService(AuthRepository authRepo, ProjectEmployeeRepository projectEmployeeRepo) {
 		this.authRepo = authRepo;
+		this.projectEmployeeRepo = projectEmployeeRepo;
+	}
+	
+	private Employee checkUser(Long id) {
+		Optional<Employee> result = authRepo.findById(id);
+		if (result.isPresent()) {
+			return result.get();
+		}
+		throw new RuntimeException("존재하지 않는 사용자입니다");
 	}
 
 	public List<Employee> getUserList() {
@@ -22,12 +34,13 @@ public class UserService {
 		return empList;
 	}
 	
-	public EmployeeDto getUser(Long id) {
-		Optional<Employee> result = authRepo.findById(id);
-		if (result.isPresent()) {
-			Employee emp = result.get();
-			return emp.toDto();
-		}
-		throw new RuntimeException("존재하지 않는 사용자입니다");
+	public EmployeeDto getUserInfo(Long eid) {
+		EmployeeDto empDto = checkUser(eid).toDto();
+		return empDto;
+	}
+	
+	public List<ProjectDto> getUserProjectList(Long eid) {
+		List<ProjectDto> projectList = projectEmployeeRepo.findProjectsByEmployeeId(eid);
+		return projectList;
 	}
 }

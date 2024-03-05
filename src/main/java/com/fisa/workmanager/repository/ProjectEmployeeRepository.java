@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.fisa.workmanager.dto.ProjectDto;
 import com.fisa.workmanager.dto.ProjectEmployeeDto;
+import com.fisa.workmanager.model.entity.Project;
 import com.fisa.workmanager.model.entity.ProjectEmployee;
 import com.fisa.workmanager.model.entity.id.ProjectEmployeeId;
 
@@ -30,4 +32,11 @@ public interface ProjectEmployeeRepository extends JpaRepository<ProjectEmployee
     		+ "FROM ProjectEmployee pe "
     		+ "WHERE pe.employee.id = :eid AND pe.project.id = :pid")
     Optional<ProjectEmployeeDto> findDtoByEidAndPid(@Param("eid") Long eid, @Param("pid") Long pid);
+    
+    @Query("SELECT new com.fisa.workmanager.dto.ProjectDto(pe.project.id, pe.project.pname, pe.project.description, pe.project.client, pe.project.budget, pe.project.startDate, pe.project.deadline) " +
+    	       "FROM ProjectEmployee pe " +
+    	       "WHERE pe.employee.id = :eid")
+	List<ProjectDto> findProjectsByEmployeeId(@Param("eid") Long employeeId);
+
+
 }
