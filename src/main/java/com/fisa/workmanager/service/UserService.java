@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.fisa.workmanager.dto.EmployeeDto;
-import com.fisa.workmanager.dto.ProjectEmployeeDto;
+import com.fisa.workmanager.dto.ProjectDto;
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.repository.AuthRepository;
 import com.fisa.workmanager.repository.ProjectEmployeeRepository;
@@ -39,8 +39,8 @@ public class UserService {
 		return empDto;
 	}
 	
-	public List<ProjectEmployeeDto> getUserProjectList(Long eid) {
-		List<ProjectEmployeeDto> projectList = projectEmployeeRepo.findProjectsByEmployeeId(eid);
+	public List<ProjectDto> getUserProjectList(Long eid) {
+		List<ProjectDto> projectList = projectEmployeeRepo.findProjectsByEmployeeId(eid);
 		return projectList;
 	}
 }
