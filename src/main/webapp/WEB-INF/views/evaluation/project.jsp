@@ -23,7 +23,7 @@
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 	
 	<div class="container mt-4">
-   		<h4 class="title mb-4"><b>${peDtoList[0].pname}</b></h4> <!-- TODO: 평가점수까지 포함한 DTO로 변경 -->
+   		<h4 class="title mb-4"><b>${project.pname}</b></h4>
    	</div>
     <div class="container mt-3">
         <div class="employees">
@@ -35,15 +35,19 @@
                     <tr>
                         <th scope="col">사번</th>
                         <th scope="col">사원명</th>
-                        <th scope="col">배정 직무</th>
+                        <th scope="col">PM 평가</th>
+                        <th scope="col">발주처 평가</th>
+                        <th scope="col">동료 평가 평점</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="user" items="${peDtoList}">
-                        <tr onclick="addEmployee('${user.pid}', '${user.eid}', '${user.ename}', '${user.name}');">
+                    <c:forEach var="user" items="${empEvalList}">
+                        <tr>
                             <td>${user.ename}</td>
                             <td style="cursor: pointer; color: blue;">${user.name}</td>
-                            <td>${user.role}</td>
+                            <td>${user.pmScore}</td>
+                            <td>${user.clientScore}</td>
+                            <td>${user.peerScore}</td>
                         </tr>
                     </c:forEach>
                 </tbody>

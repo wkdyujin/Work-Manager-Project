@@ -103,7 +103,7 @@ public class EvaluationService {
 	}
 	
 	@Transactional
-	public ProjEmpEvalScoreDto getProjUserEvalScore(Long pid) {
+	public List<ProjEmpEvalScoreDto> getProjUserEvalScore(Long pid) {
 		List<ProjEmpEvalScoreDto> scoreList = peerEvalRepository.findAllScoresByProjectId(pid);
 		for (ProjEmpEvalScoreDto dto: scoreList) {
 			
@@ -117,8 +117,10 @@ public class EvaluationService {
 					dto.setPmScore(entity.getScore().doubleValue());;
 				}
 			}
-			return dto;
+			for (ProjEmpEvalScoreDto peEvalDto :scoreList) {
+				System.out.println(peEvalDto.toString());
+			}
 		}
-		throw new RuntimeException("오류가 발생했습니다.");
+		return scoreList;
 	}
 }

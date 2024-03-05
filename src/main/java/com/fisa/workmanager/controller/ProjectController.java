@@ -94,9 +94,9 @@ public class ProjectController {
 
 	@CheckLogin
 	@GetMapping("/csv/{id}")
-	public void downloadCsv(@PathVariable("id") Long projectId, HttpServletResponse response, HttpSession session) throws IOException {
+	public void downloadCsv(@PathVariable("id") Long projectId, HttpServletResponse response) throws IOException {
 	    // 프로젝트 ID를 기반으로 참여 사원 목록 조회
-	    List<ProjectEmployeeDto> employeeList = projectService.getProjectEmployee(projectId, getEmpId(session));
+	    List<ProjectEmployeeDto> employeeList = projectService.getProjectEmployee(projectId);
 
 	    // CSV 파일 헤더 설정
 	    response.setContentType("text/csv; charset=UTF-8");

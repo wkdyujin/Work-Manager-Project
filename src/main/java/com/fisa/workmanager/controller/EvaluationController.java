@@ -22,6 +22,8 @@ import com.fisa.workmanager.dto.AuthDto;
 import com.fisa.workmanager.dto.EvaluationDto;
 import com.fisa.workmanager.dto.PeerEvalDto;
 import com.fisa.workmanager.dto.PmCustomerEvalDto;
+import com.fisa.workmanager.dto.ProjEmpEvalScoreDto;
+import com.fisa.workmanager.dto.ProjectDto;
 import com.fisa.workmanager.dto.ProjectEmployeeDto;
 import com.fisa.workmanager.model.entity.PmCustomerEvaluation.EvaluationType;
 import com.fisa.workmanager.service.EvaluationService;
@@ -129,7 +131,10 @@ public class EvaluationController {
 	@CheckLogin
 	@GetMapping("/project/{pid}")
 	public String confirmProjectEval(@PathVariable Long pid, Model model) {
-		// model에 dto 전달
+		List<ProjEmpEvalScoreDto> evalDto = evaluationService.getProjUserEvalScore(pid);
+		model.addAttribute("empEvalList", evalDto);
+		ProjectDto projectDto = projectService.getProject(pid);
+		model.addAttribute("project", projectDto);
 		return "evaluation/project";
 	}
 }

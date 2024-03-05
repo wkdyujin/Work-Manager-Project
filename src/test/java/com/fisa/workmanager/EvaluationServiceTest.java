@@ -35,6 +35,6 @@ public class EvaluationServiceTest {
 	
 	@Test
 	void 평가점수조회() {
-		evaluationService.getProjUserEvalScore(5L);
+		evaluationService.getProjUserEvalScore(1L);
 	}
 }
