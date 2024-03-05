@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fisa.workmanager.dto.EmployeeDto;
+import com.fisa.workmanager.dto.ProjectEmployeeDto;
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.service.UserService;
 
@@ -24,8 +25,15 @@ public class UserServiceTest {
 	
 	@Test
 	void 특정유저조회() {
-		EmployeeDto empDto = userService.getUser(1L);
-		
+		EmployeeDto empDto = userService.getUserInfo(1L);
+	}
+	
+	@Test
+	void 유저참여프로젝트목록조회() {
+		List<ProjectEmployeeDto> peDto = userService.getUserProjectList(1L);
+		for (ProjectEmployeeDto dto: peDto) {
+			System.out.println(dto.toString());
+		}
 	}
 
 }

@@ -32,9 +32,9 @@ public class UserController {
 	}
 
 	@CheckLogin
-	@GetMapping("/{id}")
-	public String getUserById(@PathVariable("id") Long id, Model model) {
-		EmployeeDto empDto = userService.getUser(id);
+	@GetMapping("/{eid}")
+	public String getUserById(@PathVariable("eid") Long eid, Model model) {
+		EmployeeDto empDto = userService.getUserInfo(eid);
 		model.addAttribute("user", empDto);
 		return "user/detail";
 	}

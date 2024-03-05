@@ -35,7 +35,7 @@ public class AuthServiceTest {
 		
 		// then
 		// 저장한 User 레포지토리에 있는 검증
-		EmployeeDto findEmp = userService.getUser(16L); // 마지막+1 index로 수정 필
+		EmployeeDto findEmp = userService.getUserInfo(16L); // 마지막+1 index로 수정 필
 		assertThat(emp.getName()).isEqualTo(findEmp.getName());
 	}
 }
