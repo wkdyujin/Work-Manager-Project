@@ -14,13 +14,17 @@
         .item {
         	margin-top: 10px
         }
+        .title {
+        	margin-top: 30px
+        }
     </style>
 </head>
 <body>
     <%@include file="/WEB-INF/views/include/header.jsp"%>
 
     <div class="table-responsive">
-    	<a class="btn btn-primary item" href="/auth/register">신규 사원 등록</a>
+    	<h4 class="title"><b>전체 사원 목록</b></h4>
+    	<a class="btn btn-primary item float-right mb-1" href="/auth/register">신규 사원 등록</a>
     	
         <table class="table item">
             <thead class="thead-dark">

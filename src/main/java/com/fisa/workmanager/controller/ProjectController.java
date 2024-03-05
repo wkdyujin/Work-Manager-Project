@@ -58,8 +58,8 @@ public class ProjectController {
 
 	@CheckLogin
 	@GetMapping("/detail/{pid}")
-	public String getProject(@PathVariable("pid") Long pid, Model model, HttpSession session) {
-		List<ProjectEmployeeDto> peDtoList = projectService.getProjectEmployee(pid, getEmpId(session));
+	public String getProject(@PathVariable("pid") Long pid, Model model) {
+		List<ProjectEmployeeDto> peDtoList = projectService.getProjectEmployee(pid);
 		model.addAttribute("project", peDtoList);
 		
 		boolean isDeadlinePassed = peDtoList.get(0).getDeadline().before(new Date());

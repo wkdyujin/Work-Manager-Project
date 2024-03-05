@@ -21,7 +21,12 @@
             <h4 class="title"><b>프로젝트 상세보기</b></h4>
             <c:if test="${isDeadlinePassed}">
             	<button type="button" class="btn btn-outline-success" disabled>마감</button>
-            	<a href="/evaluation/internal/form/${project[0].pid}" class="btn btn-primary">참여 사원 평가</a>
+            	<c:if test="${session.role != 'ADMIN'}">
+            		<a href="/evaluation/internal/form/${project[0].pid}" class="btn btn-primary">참여 사원 평가</a>
+	            </c:if>
+	            <c:if test="${session.role == 'ADMIN'}">
+	            	<a href="/evaluation/project/${project[0].pid}" class="btn btn-primary">평가 결과 확인</a>
+	            </c:if>
             </c:if>
             <c:if test="${not isDeadlinePassed}">
 				<button type="button" class="btn btn-outline-danger" disabled>진행중</button>

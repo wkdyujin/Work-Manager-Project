@@ -57,6 +57,13 @@ public class ProjectService {
 		return project.getId();
 	}
 
+	// 전체 project x employee 조회
+	public List<ProjectEmployeeDto> getProjectEmployee(Long pid) {
+		List<ProjectEmployeeDto> peDtoList = projectEmployeeRepo.findByProjectId(pid);
+		return peDtoList;
+	}
+
+	// 현재 유저 제외 project x employee 조회
 	public List<ProjectEmployeeDto> getProjectEmployee(Long pid, Long eid) {
 		List<ProjectEmployeeDto> peDtoList = projectEmployeeRepo.findProEmpWithoutPm(pid, eid);
 		return peDtoList;

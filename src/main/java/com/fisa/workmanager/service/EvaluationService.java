@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.fisa.workmanager.dto.PeerEvalDto;
 import com.fisa.workmanager.dto.PmCustomerEvalDto;
+import com.fisa.workmanager.dto.ProjEmpEvalScoreDto;
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.model.entity.PmCustomerEvaluation;
 import com.fisa.workmanager.model.entity.PmCustomerEvaluation.EvaluationType;
 import com.fisa.workmanager.model.entity.Project;
+import com.fisa.workmanager.model.entity.ProjectEmployee;
 import com.fisa.workmanager.repository.AuthRepository;
 import com.fisa.workmanager.repository.PeerEvalRepository;
 import com.fisa.workmanager.repository.PmCustomerEvalRepository;
@@ -98,5 +100,25 @@ public class EvaluationService {
 		dto.setEvaluator(evaluator);
 		
 		peerEvalRepository.save(dto.toEntity());
+	}
+	
+	@Transactional
+	public ProjEmpEvalScoreDto getProjUserEvalScore(Long pid) {
+		List<ProjEmpEvalScoreDto> scoreList = peerEvalRepository.findAllScoresByProjectId(pid);
+		for (ProjEmpEvalScoreDto dto: scoreList) {
+			
+			// pm, customer score 받아와서 set
+			List<PmCustomerEvaluation> pmCusEval = pmCustomerEvalRepo.findAllByPidAndEid(pid, dto.getEid());
+			for (PmCustomerEvaluation entity: pmCusEval) {
+				if(entity.getEvalType() == EvaluationType.CUSTOMER) {
+					dto.setClientScore(entity.getScore().doubleValue());
+				}
+				if(entity.getEvalType() == EvaluationType.PM) {
+					dto.setPmScore(entity.getScore().doubleValue());;
+				}
+			}
+			return dto;
+		}
+		throw new RuntimeException("오류가 발생했습니다.");
 	}
 }
