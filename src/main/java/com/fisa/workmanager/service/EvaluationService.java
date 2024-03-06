@@ -107,7 +107,6 @@ public class EvaluationService {
 		List<ProjEmpEvalScoreDto> scoreList = peerEvalRepository.findAllScoresByProjectId(pid);
 		for (ProjEmpEvalScoreDto dto: scoreList) {
 			
-			// pm, customer score 받아와서 set
 			List<PmCustomerEvaluation> pmCusEval = pmCustomerEvalRepo.findAllByPidAndEid(pid, dto.getEid());
 			for (PmCustomerEvaluation entity: pmCusEval) {
 				if(entity.getEvalType() == EvaluationType.CUSTOMER) {
@@ -116,9 +115,6 @@ public class EvaluationService {
 				if(entity.getEvalType() == EvaluationType.PM) {
 					dto.setPmScore(entity.getScore().doubleValue());;
 				}
-			}
-			for (ProjEmpEvalScoreDto peEvalDto :scoreList) {
-				System.out.println(peEvalDto.toString());
 			}
 		}
 		return scoreList;
