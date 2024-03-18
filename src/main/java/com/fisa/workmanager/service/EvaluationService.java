@@ -1,5 +1,6 @@
 package com.fisa.workmanager.service;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.fisa.workmanager.dto.PeerEvalDto;
 import com.fisa.workmanager.dto.PmCustomerEvalDto;
 import com.fisa.workmanager.dto.ProjEmpEvalScoreDto;
+import com.fisa.workmanager.dto.ProjectEmployeeDto;
 import com.fisa.workmanager.model.entity.Employee;
 import com.fisa.workmanager.model.entity.PmCustomerEvaluation;
 import com.fisa.workmanager.model.entity.PmCustomerEvaluation.EvaluationType;
@@ -18,6 +20,7 @@ import com.fisa.workmanager.model.entity.ProjectEmployee;
 import com.fisa.workmanager.repository.AuthRepository;
 import com.fisa.workmanager.repository.PeerEvalRepository;
 import com.fisa.workmanager.repository.PmCustomerEvalRepository;
+import com.fisa.workmanager.repository.ProjectEmployeeRepository;
 import com.fisa.workmanager.repository.ProjectRepository;
 
 import jakarta.transaction.Transactional;
@@ -28,12 +31,14 @@ public class EvaluationService {
 	private AuthRepository authRepository;
 	private ProjectRepository projectRepository;
 	private PeerEvalRepository peerEvalRepository;
+	private ProjectEmployeeRepository projectEmployeeRepository;
 	
-	EvaluationService(PmCustomerEvalRepository pmCustomerEvalRepo, AuthRepository authRepository, ProjectRepository projectRepository, PeerEvalRepository peerEvalRepository) {
+	EvaluationService(PmCustomerEvalRepository pmCustomerEvalRepo, AuthRepository authRepository, ProjectRepository projectRepository, PeerEvalRepository peerEvalRepository, ProjectEmployeeRepository projectEmployeeRepository) {
 		this.pmCustomerEvalRepo = pmCustomerEvalRepo;
 		this.authRepository = authRepository;
 		this.projectRepository = projectRepository;
 		this.peerEvalRepository = peerEvalRepository;
+		this.projectEmployeeRepository = projectEmployeeRepository;
 	}
 	
 	private Project getProject(Long pid) {
@@ -104,9 +109,34 @@ public class EvaluationService {
 	
 	@Transactional
 	public List<ProjEmpEvalScoreDto> getProjUserEvalScore(Long pid) {
-		List<ProjEmpEvalScoreDto> scoreList = peerEvalRepository.findAllScoresByProjectId(pid);
-		for (ProjEmpEvalScoreDto dto: scoreList) {
+		// return할 dto
+		List<ProjEmpEvalScoreDto> scoreList = new ArrayList<>();
+		
+		// 프로젝트 참여 사원 결과 조회
+		List<ProjectEmployeeDto> projectEmployeeList = projectEmployeeRepository.findByProjectId(pid);
+		
+		
+		for (ProjectEmployeeDto employee: projectEmployeeList) {
+			System.out.println(employee.toString());
 			
+			// dto 값 추가
+			scoreList.add(ProjEmpEvalScoreDto.builder()
+					.eid(employee.getEid())
+					.ename(employee.getEname())
+					.name(employee.getName())
+					.build());
+		}
+		
+		for (ProjEmpEvalScoreDto dto: scoreList) {
+			// 동료 평가 존재 시 추가
+			List<ProjEmpEvalScoreDto> peerEvalList = peerEvalRepository.findAllScoresByProjectId(pid);
+			for (ProjEmpEvalScoreDto peerDto: peerEvalList) {
+				if(peerDto.getEid().equals(dto.getEid())) {
+					dto.setPeerScore(peerDto.getPeerScore());
+				}
+			}
+			
+			// PM 및 발주처 평가 존재 시 추가
 			List<PmCustomerEvaluation> pmCusEval = pmCustomerEvalRepo.findAllByPidAndEid(pid, dto.getEid());
 			for (PmCustomerEvaluation entity: pmCusEval) {
 				if(entity.getEvalType() == EvaluationType.CUSTOMER) {
@@ -117,6 +147,7 @@ public class EvaluationService {
 				}
 			}
 		}
+		
 		return scoreList;
 	}
 }
