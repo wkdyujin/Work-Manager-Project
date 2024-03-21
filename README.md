@@ -50,6 +50,3 @@ WorkManager는 IT 아웃소싱 기업을 위해 개발된 웹 기반 인사 시�
 ![image](https://github.com/wkdyujin/Work-Manager-Project/assets/69359774/778a4c4a-62f8-4e42-aeb3-622cb4a5e0bd)
 ![image](https://github.com/wkdyujin/Work-Manager-Project/assets/69359774/f059775b-add9-4c6c-8d34-5b8d814f76c3)
 
-![image](https://github.com/wkdyujin/Work-Manager-Project/assets/69359774/302e95f2-d93d-4d97-b8be-430219b6ba03)
-![image](https://github.com/wkdyujin/Work-Manager-Project/assets/69359774/67e1bb9b-8fd8-48f4-a249-f974f0215273)
-
